@@ -28,6 +28,7 @@ public class LoginAction extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         boolean userExists = false;
@@ -44,6 +45,7 @@ public class LoginAction extends HttpServlet {
             ResultSet res = stmt.executeQuery();
             userExists = res.next();
             if(userExists){
+                session.setAttribute("username",username);
                 if(Objects.equals(username, "root")){
                     response.sendRedirect("admin.jsp");
                 } else {

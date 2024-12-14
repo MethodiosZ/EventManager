@@ -29,25 +29,41 @@ public class Searching extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String eventname = request.getParameter("eventnamed");
-        String eventdate = request.getParameter("eventdated");
+        String eventname = request.getParameter("eventnames");
+        Date eventdate = Date.valueOf(request.getParameter("eventdates"));
+        String seattype = request.getParameter("seattypes");
+
         String url = "jdbc:mysql://localhost:3306/EventBooking?characterEncoding=UTF-8";
         String dbUser = "root";
         String dbPassword = "";
-        String query = "DELETE FROM EVENT WHERE NAME = ? AND EVENTDATE = ?";
-        response.setContentType("text/html");
-        try {
-            Connection con = DriverManager.getConnection(url,dbUser,dbPassword);
-            PreparedStatement stmt = con.prepareStatement(query);
-            stmt.setString(1,eventname);
-            stmt.setString(2,eventdate);
-            int res = stmt.executeUpdate();
-            if(res>0){
-                request.setAttribute("deleteMessage","Event deleted successfully!");
-                request.getRequestDispatcher("admin.jsp").forward(request,response);
+
+        try(Connection con = DriverManager.getConnection(url,dbUser,dbPassword)) {
+            String eventquery = "SELECT eventid FROM event WHERE name = ? AND eventdate = ?";
+            PreparedStatement eventstmt = con.prepareStatement(eventquery);
+            eventstmt.setString(1,eventname);
+            eventstmt.setDate(2,eventdate);
+            ResultSet eventres = eventstmt.executeQuery();
+            if(!eventres.next()){
+                request.setAttribute("searchMessage","Event not found!");
+                request.getRequestDispatcher("main.jsp").forward(request,response);
+            }
+            int eventid = eventres.getInt("eventid");
+
+            String ticketquery = "SELECT * FROM ticket WHERE eventid = ? AND type = ? ORDER BY ticketid DESC LIMIT 1";
+            PreparedStatement ticketstmt = con.prepareStatement(ticketquery);
+            ticketstmt.setInt(1,eventid);
+            ticketstmt.setString(2,seattype);
+            ResultSet ticketres = ticketstmt.executeQuery();
+            if(!ticketres.next()){
+                request.setAttribute("searchMessage","Error at getting available seats!");
+                request.getRequestDispatcher("main.jsp").forward(request,response);
+            }
+            if(seattype.equals("regular")){
+                request.setAttribute("searchMessage","There are "+ticketres.getInt("availability_reg")+ " available "+seattype+" seats at "+eventname);
+                request.getRequestDispatcher("main.jsp").forward(request,response);
             } else {
-                request.setAttribute("deleteMessage","Failed to delete event!");
-                request.getRequestDispatcher("admin.jsp").forward(request,response);
+                request.setAttribute("searchMessage","There are "+ticketres.getInt("availability_vip")+ " available "+seattype+" seats at "+eventname);
+                request.getRequestDispatcher("main.jsp").forward(request,response);
             }
         } catch (SQLException | ServletException e){
             e.printStackTrace();

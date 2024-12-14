@@ -1,4 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" import="jakarta.servlet.http.HttpSession" %>
+<%
+    HttpSession session1 = request.getSession(false);
+    String username = (String) session1.getAttribute("username");
+%>
 <html>
 <head>
     <title>Control Panel</title>
@@ -26,7 +30,7 @@
                 <label for="ticketamount">Ticket Amount:</label>
                 <input type="text" id="ticketamount" name="ticketamount">
                 <label for="seattype">Seat Type:</label>
-                <select  id="seattype" name="seatype">
+                <select  id="seattype" name="seattype">
                     <option value="none">-- Select an option --</option>
                     <option value="regular">Regular</option>
                     <option value="vip">V.I.P.</option>
@@ -36,23 +40,29 @@
         </div>
 
         <div id="Searching" class="form-container-hid">
-            <form class="form">
+            <form action="${pageContext.request.contextPath}/Searching" method="post" class="form">
                 <h2>Searching</h2>
                 <label for="eventnames">Event Name:</label>
                 <input type="text" id="eventnames" name="eventnames">
                 <label for="eventdates">Event Date:</label>
-                <input type="text" id="eventdates" name="eventdates">
+                <input type="date" id="eventdates" name="eventdates">
+                <label for="seattypes">Seat Type:</label>
+                <select  id="seattypes" name="seattypes">
+                    <option value="none">-- Select an option --</option>
+                    <option value="regular">Regular</option>
+                    <option value="vip">V.I.P.</option>
+                </select>
                 <button type="submit">Search</button>
             </form>
         </div>
 
         <div id="Cancelling" class="form-container-hid">
-            <form class="form">
+            <form action="${pageContext.request.contextPath}/Cancelling" method="post" class="form">
                 <h2>Cancelling</h2>
                 <label for="eventnamec">Event Name:</label>
                 <input type="text" id="eventnamec" name="eventnamec">
-                <label for="customername">Customer Name:</label>
-                <input type="text" id="customername" name="customername">
+                <label for="eventdateca">Event Date:</label>
+                <input type="date" id="eventdateca" name="eventdateca">
                 <button type="submit">Cancel</button>
             </form>
         </div>
@@ -117,6 +127,27 @@
             if(deleteMessage!=null){
         %>
         alert("<%= deleteMessage%>");
+        <% } %>
+
+        <%
+            String bookingMessage = (String) request.getAttribute("bookingMessage");
+            if(bookingMessage!=null){
+        %>
+        alert("<%= bookingMessage%>");
+        <% } %>
+
+        <%
+            String searchMessage = (String) request.getAttribute("searchMessage");
+            if(searchMessage!=null){
+        %>
+        alert("<%= searchMessage%>");
+        <% } %>
+
+        <%
+            String cancelMessage = (String) request.getAttribute("cancelMessage");
+            if(cancelMessage!=null){
+        %>
+        alert("<%= cancelMessage%>");
         <% } %>
     </script>
 </body>
