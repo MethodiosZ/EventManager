@@ -101,6 +101,7 @@
         <div id="eventspace" class="form-container-hid">
             <form action="${pageContext.request.contextPath}/AdminStatistics" method="post" class="form">
                 <h2>Searching seat state in event</h2>
+                <input type="hidden" name="action" value="eventspace">
                 <label for="eventnamespace">Event Name:</label>
                 <input type="text" id="eventnamespace" name="eventnamespace" required>
                 <label for="eventdatespace">Event Date:</label>
@@ -112,6 +113,7 @@
         <div id="eventrevenue" class="form-container-hid">
             <form action="${pageContext.request.contextPath}/AdminStatistics" method="post" class="form">
                 <h2>Searching event revenue</h2>
+                <input type="hidden" name="action" value="eventrevenue">
                 <label for="eventnamerev">Event Name:</label>
                 <input type="text" id="eventnamerev" name="eventnamerev" required>
                 <button type="submit">Search</button>
@@ -121,8 +123,7 @@
         <div id="popularevent" class="form-container-hid">
             <form action="${pageContext.request.contextPath}/AdminStatistics" method="post" class="form">
                 <h2>Searching most popular event</h2>
-                <label for="eventnamepop">Event Name:</label>
-                <input type="text" id="eventnamepop" name="eventnamepop" required>
+                <input type="hidden" name="action" value="popularevent">
                 <button type="submit">Search</button>
             </form>
         </div>
@@ -130,8 +131,7 @@
         <div id="profitableevent" class="form-container-hid">
             <form action="${pageContext.request.contextPath}/AdminStatistics" method="post" class="form">
                 <h2>Searching most profitable event in a time period</h2>
-                <label for="eventnameprof">Event Name:</label>
-                <input type="text" id="eventnameprof" name="eventnameprof" required>
+                <input type="hidden" name="action" value="profitableevent">
                 <label for="startdate">Start Date:</label>
                 <input type="date" id="startdate" name="startdate" required>
                 <label for="enddate">End Date:</label>
@@ -143,6 +143,7 @@
         <div id="bookingsperiod" class="form-container-hid">
             <form action="${pageContext.request.contextPath}/AdminStatistics" method="post" class="form">
                 <h2>Searching bookings in a time period</h2>
+                <input type="hidden" name="action" value="bookingsperiod">
                 <label for="startdateb">Start Date:</label>
                 <input type="date" id="startdateb" name="startdateb" required>
                 <label for="enddateb">End Date:</label>
@@ -154,6 +155,7 @@
         <div id="seattyperevenue" class="form-container-hid">
             <form action="${pageContext.request.contextPath}/AdminStatistics" method="post" class="form">
                 <h2>Revenue per seat type in an event or in total</h2>
+                <input type="hidden" name="action" value="seattyperevenue">
                 <label for="eventnameseat">Event Name:</label>
                 <input type="text" id="eventnameseat" name="eventnameseat">
                 <select  id="seattypeprof" name="seattypeprof" required>
@@ -220,6 +222,13 @@
             if(cancelMessage!=null){
         %>
         alert("<%= cancelMessage%>");
+        <% } %>
+
+        <%
+            String statisticMessage = (String) request.getAttribute("statisticMessage");
+            if(statisticMessage!=null){
+        %>
+        alert("<%= statisticMessage%>");
         <% } %>
     </script>
 </body>

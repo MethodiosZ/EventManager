@@ -79,7 +79,7 @@ public class Booking extends HttpServlet{
             }
 
             //Check for availability
-            if(vipcap<0 || regcap<0){
+            if(vipcap<=0 || regcap<=0){
                 request.setAttribute("bookingMessage","Tickets sold out!");
                 request.getRequestDispatcher("main.jsp").forward(request,response);
             }
@@ -102,11 +102,11 @@ public class Booking extends HttpServlet{
                 ticketstmt.setDouble(1,price);
                 ticketstmt.setString(2,seattype);
                 if(seattype.equals("vip")) {
-                    ticketstmt.setInt(3,vipcap-i);
+                    ticketstmt.setInt(3,vipcap-i-1);
                     ticketstmt.setInt(4,regcap);
                 } else {
                     ticketstmt.setInt(3,vipcap);
-                    ticketstmt.setInt(4,regcap-i);
+                    ticketstmt.setInt(4,regcap-i-1);
                 }
                 ticketstmt.setInt(5,evendId);
                 ticketstmt.addBatch();
