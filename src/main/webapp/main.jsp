@@ -26,11 +26,11 @@
             <form action="${pageContext.request.contextPath}/Booking" method="post" class="form">
                 <h2>Booking</h2>
                 <label for="eventnameb">Event Name:</label>
-                <input type="text" id="eventnameb" name="eventnameb">
+                <input type="text" id="eventnameb" name="eventnameb" required>
                 <label for="ticketamount">Ticket Amount:</label>
-                <input type="text" id="ticketamount" name="ticketamount">
+                <input type="text" id="ticketamount" name="ticketamount" required>
                 <label for="seattype">Seat Type:</label>
-                <select  id="seattype" name="seattype">
+                <select  id="seattype" name="seattype" required>
                     <option value="none">-- Select an option --</option>
                     <option value="regular">Regular</option>
                     <option value="vip">V.I.P.</option>
@@ -43,11 +43,11 @@
             <form action="${pageContext.request.contextPath}/Searching" method="post" class="form">
                 <h2>Searching</h2>
                 <label for="eventnames">Event Name:</label>
-                <input type="text" id="eventnames" name="eventnames">
+                <input type="text" id="eventnames" name="eventnames" required>
                 <label for="eventdates">Event Date:</label>
-                <input type="date" id="eventdates" name="eventdates">
+                <input type="date" id="eventdates" name="eventdates" required>
                 <label for="seattypes">Seat Type:</label>
-                <select  id="seattypes" name="seattypes">
+                <select  id="seattypes" name="seattypes" required>
                     <option value="none">-- Select an option --</option>
                     <option value="regular">Regular</option>
                     <option value="vip">V.I.P.</option>
@@ -60,9 +60,9 @@
             <form action="${pageContext.request.contextPath}/Cancelling" method="post" class="form">
                 <h2>Cancelling</h2>
                 <label for="eventnamec">Event Name:</label>
-                <input type="text" id="eventnamec" name="eventnamec">
+                <input type="text" id="eventnamec" name="eventnamec" required>
                 <label for="eventdateca">Event Date:</label>
-                <input type="date" id="eventdateca" name="eventdateca">
+                <input type="date" id="eventdateca" name="eventdateca" required>
                 <button type="submit">Cancel</button>
             </form>
         </div>
