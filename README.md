@@ -1,4 +1,6 @@
-Main.java file is for the creation of the data tables and its independent of the other files
+# Author: Methodios Zacharioudakis
+
+#### Main.java file is for the creation of the data tables and its independent of the other files
 
 SignupAction.java is the code where we will insert the new user to the customer table
 
